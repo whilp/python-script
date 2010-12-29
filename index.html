@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A Python script &mdash; python-script v0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-script v0.1.0 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">python-script v0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-python-script">
+<h1>A Python script<a class="headerlink" href="#a-python-script" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-script"></span><p>This is what an ideal Python script might look like.</p>
+<p>It&#8217;s written to have several important properties; namely:</p>
+<blockquote>
+<ul class="simple">
+<li>readability: follows <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a>.</li>
+<li>portability: uses portable components where necessary.</li>
+<li>testability: unit and functional tests that can be run without causing side
+effects.</li>
+<li>configurability: command line configuration of logging and other details.</li>
+</ul>
+</blockquote>
+<p><a class="reference external" href="http://git-scm.com/">Git</a> and <a class="reference external" href="http://mercurial.selenic.com/">Mercurial</a> repositories for this script can be found at <a class="reference external" href="http://github.com/wcmaier/python-script">Github</a> and
+<a class="reference external" href="http://bitbucket.org/wcmaier/python-script">Bitbucket</a>, respectively:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git clone git://github.com/wcmaier/python-script.git
+$ hg clone http://bitbucket.org/wcmaier/python-script
+</pre></div>
+</div>
+<dl class="class">
+<dt id="script.TestFunctional">
+<em class="property">class </em><tt class="descclassname">script.</tt><tt class="descname">TestFunctional</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/script.html#TestFunctional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.TestFunctional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/unittest.html#unittest.TestCase" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">unittest.TestCase</span></tt></a></p>
+<p>Functional tests.</p>
+<p>These tests build a temporary environment and run the script in it.</p>
+<dl class="method">
+<dt id="script.TestFunctional.run">
+<tt class="descname">run</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/script.html#TestFunctional.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.TestFunctional.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a subprocess.</p>
+<p>Returns a tuple (<em>process</em>, <em>stdout</em>, <em>stderr</em>). If the <em>communicate</em>
+keyword argument is True, <em>stdout</em> and <em>stderr</em> will be strings.
+Otherwise, they will be None. <em>process</em> is a <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.Popen" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">subprocess.Popen</span></tt></a>
+instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>args</strong> &#8211; arguments to be passed to <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.Popen" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">subprocess.Popen</span></tt></a>.</li>
+<li><strong>kwargs</strong> &#8211; keyword arguments to be passed to :class`subprocess.Popen`.</li>
+<li><strong>communicate</strong> &#8211; if True, call <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.Popen.communicate" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">subprocess.Popen.communicate()</span></tt></a> after creating the subprocess.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="script.TestFunctional.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/script.html#TestFunctional.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.TestFunctional.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare for a test.</p>
+<p>This method builds an artificial runtime environment, creates a
+temporary directory and sets it as the working directory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="script.TestFunctional.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/script.html#TestFunctional.tearDown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.TestFunctional.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up after a test.</p>
+<p>This method destroys the temporary directory, resets the working
+directory and reaps any leftover subprocesses.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="script.main">
+<tt class="descclassname">script.</tt><tt class="descname">main</tt><big>(</big><em>argv</em><big>)</big><a class="reference internal" href="_modules/script.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry point.</p>
+<p>Returns a value that can be understood by <a class="reference external" href="http://docs.python.org/library/sys.html#sys.exit" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>argv</strong> &#8211; a list of command line arguments, usually <a class="reference external" href="http://docs.python.org/library/sys.html#sys.argv" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">sys.argv</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="script.parseargs">
+<tt class="descclassname">script.</tt><tt class="descname">parseargs</tt><big>(</big><em>args</em><big>)</big><a class="reference internal" href="_modules/script.html#parseargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.parseargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse command line <em>args</em>.</p>
+<p>Returns a tuple (<em>opts</em>, <em>args</em>), where <em>opts</em> is an
+<tt class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></tt> instance and <em>args</em> is the list of arguments left
+over after processing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>args</strong> &#8211; a list of command line arguments, usually <a class="reference external" href="http://docs.python.org/library/sys.html#sys.argv" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">sys.argv</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">python-script v0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Will Maier.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>
