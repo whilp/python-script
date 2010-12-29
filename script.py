@@ -8,6 +8,17 @@ It's written to have several important properties; namely:
   * testability: unit and functional tests that can be run without causing side
     effects.
   * configurability: command line configuration of logging and other details.
+
+`Git`_ and `Mercurial`_ repositories for this script can be found at `Github`_ and
+`Bitbucket`_, respectively::
+    
+    $ git clone git://github.com/wcmaier/python-script.git
+    $ hg clone http://bitbucket.org/wcmaier/python-script
+
+.. _Git:        http://git-scm.com/
+.. _Mercurial:  http://mercurial.selenic.com/
+.. _Github:     http://github.com/wcmaier/python-script
+.. _Bitbucket:  http://bitbucket.org/wcmaier/python-script
 """
 __license__ = """\
 Copyright (c) 2010 Will Maier <willmaier@ml1.net>
