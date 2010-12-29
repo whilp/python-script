@@ -1,0 +1,171 @@
+import logging
+import optparse
+import sys
+
+# NullHandler was added in Python 3.1.
+try:
+    NullHandler = logging.NullHandler
+except AttributeError:
+    class NullHandler(logging.Handler):
+        def emit(self, record): pass
+
+# Add a do-nothing NullHandler to the module logger to prevent "No handlers
+# could be found" errors. The calling code can still add other, more useful
+# handlers, or otherwise configure logging.
+log = logging.getLogger(__name__)
+log.addHandler(NullHandler())
+
+def parseargs(args):
+    """Parse command line *args*.
+
+    Returns a tuple (*opts*, *args*), where *opts* is an
+    :class:`optparse.Values` instance and *args* is the list of arguments left
+    over after processing.
+
+    :param args: a list of command line arguments, usually :data:`sys.argv`.
+    """
+    parser = optparse.OptionParser()
+    parser.allow_interspersed_args = False
+
+    defaults = {
+        "quiet": 0,
+        "silent": False,
+        "verbose": 0,
+    }
+
+    # Global options.
+    parser.add_option("-q", "--quiet", dest="quiet",
+        default=defaults["quiet"], action="count",
+        help="decrease the logging verbosity")
+    parser.add_option("-s", "--silent", dest="silent",
+        default=defaults["silent"], action="store_true",
+        help="silence the logger")
+    parser.add_option("-v", "--verbose", dest="verbose",
+        default=defaults["verbose"], action="count",
+        help="increase the logging verbosity")
+
+    (opts, args) = parser.parse_args(args=args)
+    return (opts, args)
+
+def main(argv):
+    """Main entry point.
+
+    Returns a value that can be understood by :func:`sys.exit`.
+
+    :param argv: a list of command line arguments, usually :data:`sys.argv`.
+    """
+    (opts, args) = parseargs(argv)
+    level = logging.WARNING - ((opts.verbose - opts.quiet) * 10)
+    if opts.silent:
+        level = logging.CRITICAL + 1
+
+    format = "%(message)s"
+    handler = logging.StreamHandler(sys.stderr)
+    handler.setFormatter(logging.Formatter(format))
+    log.addHandler(handler)
+    log.setLevel(level)
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
+
+# Script unit and functional tests. These tests are defined after the '__name__
+# == "__main__"' idiom so that they aren't loaded when the script is executed.
+# If the script (or a symlink to the script) has the usual .py filename
+# extension, these tests may be run as follows:
+# 
+#   $ python -m unittest path/to/script.py (Python 3.X/unittest2)
+#   $ nosetests path/to/script.py
+#
+# If the script does not have the .py extension, the scriptloader nose plugin
+# can be used instead:
+#
+#   $ pip install scriptloader
+#   $ nosetests --with-scriptloader path/to/script
+
+# Override the global logger instance with one from a special "tests" namespace.
+log = logging.getLogger("%s.tests" % __name__)
+
+import os
+import shutil
+import subprocess
+import tempfile
+import unittest
+
+class TestMain(unittest.TestCase):
+    pass
+
+class TestFunctional(unittest.TestCase):
+    """Functional tests.
+
+    These tests build a temporary environment and run the script in it.
+    """
+
+    def setUp(self):
+        """Prepare for a test.
+
+        This method builds an artificial runtime environment, creates a
+        temporary directory and sets it as the working directory.
+        """
+        unittest.TestCase.setUp(self)
+
+        self.processes = []
+        self.env = {
+            "PATH": os.environ["PATH"],
+            "LANG": "C",
+        }
+        self.tmpdir = tempfile.mkdtemp(prefix="-test-" % __name__)
+        self.oldcwd = os.getcwd()
+
+        log.debug("Initializing test directory %r", self.tmpdir)
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        """Clean up after a test.
+
+        This method destroys the temporary directory, resets the working
+        directory and reaps any leftover subprocesses.
+        """
+        unittest.TestCase.tearDown(self)
+        log.debug("Cleaning up test directory %r", self.tmpdir)
+        shutil.rmtree(self.tmpdir)
+        os.chdir(self.oldcwd)
+
+        for process in self.processes:
+            log.debug("Reaping test process with PID %d", process.pid)
+            try:
+                process.kill()
+            except OSError, e:
+                if e.errno != 3:
+                    raise
+
+    def run(self, *args, **kwargs):
+        """Run a subprocess.
+
+        Returns a tuple (*process*, *stdout*, *stderr*). If the *communicate*
+        keyword argument is True, *stdout* and *stderr* will be strings.
+        Otherwise, they will be None. *process* is a :class:`subprocess.Popen`
+        instance.
+
+        :param args: arguments to be passed to :class:`subprocess.Popen`.
+        :param kwargs: keyword arguments to be passed to :class`subprocess.Popen`.
+        :param communicate: if True, call :meth:`subprocess.Popen.communicate` after creating the subprocess.
+        """
+        _kwargs = {
+            "stdin": subprocess.PIPE,
+            "stdout": subprocess.PIPE,
+            "stderr": subprocess.PIPE,
+            "env": self.env,
+        }
+        communicate = kwargs.pop("communicate", True)
+        _kwargs.update(kwargs)
+        kwargs = _kwargs
+        log.debug("Creating test process %r, %r", args, kwargs)
+        process = subprocess.Popen(args, **kwargs)
+
+        if communicate is True:
+            stdout, stderr = process.communicate()
+        else:
+            stdout, stderr = None, None
+            self.processes.append(process)
+
+        return process, stdout, stderr
