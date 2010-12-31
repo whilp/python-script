@@ -188,7 +188,7 @@ class TestFunctional(unittest.TestCase):
                 if e.errno != 3:
                     raise
 
-    def run(self, *args, **kwargs):
+    def sub(self, *args, **kwargs):
         """Run a subprocess.
 
         Returns a tuple (*process*, *stdout*, *stderr*). If the *communicate*
