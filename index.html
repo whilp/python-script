@@ -45,14 +45,14 @@
             
   <div class="section" id="a-python-script">
 <h1>A Python script<a class="headerlink" href="#a-python-script" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-script"></span><p>This is what an ideal Python script might look like.</p>
+<span class="target" id="module-script"></span><p><a class="reference external" href="https://github.com/wcmaier/python-script/blob/master/script.py">This</a> is what an ideal Python script might look like.</p>
 <p>It&#8217;s written to have several important properties; namely:</p>
 <blockquote>
 <ul class="simple">
 <li>readability: follows <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a>.</li>
 <li>portability: uses portable components where necessary.</li>
 <li>testability: unit and functional tests that can be run without causing side
-effects.</li>
+effects (and these tests are tested).</li>
 <li>configurability: command line configuration of logging and other details.</li>
 </ul>
 </blockquote>
@@ -69,13 +69,26 @@ $ hg clone http://bitbucket.org/wcmaier/python-script
 <p>Functional tests.</p>
 <p>These tests build a temporary environment and run the script in it.</p>
 <dl class="method">
-<dt id="script.TestFunctional.run">
-<tt class="descname">run</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/script.html#TestFunctional.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.TestFunctional.run" title="Permalink to this definition">¶</a></dt>
+<dt id="script.TestFunctional.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/script.html#TestFunctional.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.TestFunctional.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare for a test.</p>
+<p>This method builds an artificial runtime environment, creates a
+temporary directory and sets it as the working directory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="script.TestFunctional.sub">
+<tt class="descname">sub</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#script.TestFunctional.sub" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a subprocess.</p>
 <p>Returns a tuple (<em>process</em>, <em>stdout</em>, <em>stderr</em>). If the <em>communicate</em>
 keyword argument is True, <em>stdout</em> and <em>stderr</em> will be strings.
 Otherwise, they will be None. <em>process</em> is a <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.Popen" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">subprocess.Popen</span></tt></a>
-instance.</p>
+instance. By default, the path to the script itself will be used as the
+executable and <em>args</em> will be passed as arguments to it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The value of <em>executable</em> will be prepended to <em>args</em>.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -84,19 +97,12 @@ instance.</p>
 <li><strong>args</strong> &#8211; arguments to be passed to <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.Popen" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">subprocess.Popen</span></tt></a>.</li>
 <li><strong>kwargs</strong> &#8211; keyword arguments to be passed to :class`subprocess.Popen`.</li>
 <li><strong>communicate</strong> &#8211; if True, call <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.Popen.communicate" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">subprocess.Popen.communicate()</span></tt></a> after creating the subprocess.</li>
+<li><strong>executable</strong> &#8211; if present, the path to a program to execute instead of this script.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="script.TestFunctional.setUp">
-<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/script.html#TestFunctional.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.TestFunctional.setUp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prepare for a test.</p>
-<p>This method builds an artificial runtime environment, creates a
-temporary directory and sets it as the working directory.</p>
 </dd></dl>
 
 <dl class="method">
@@ -107,11 +113,38 @@ temporary directory and sets it as the working directory.</p>
 directory and reaps any leftover subprocesses.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="script.TestFunctional.test_functionaltest">
+<tt class="descname">test_functionaltest</tt><big>(</big><big>)</big><a class="headerlink" href="#script.TestFunctional.test_functionaltest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a dummy functional test.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="script.getpyfile">
+<tt class="descclassname">script.</tt><tt class="descname">getpyfile</tt><big>(</big><em>filename</em>, <em>split=&lt;function splitext at 0x81d4402c&gt;</em>, <em>exists=&lt;function exists at 0x81d3e454&gt;</em><big>)</big><a class="headerlink" href="#script.getpyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the .py file for a filename.</p>
+<p>Resolves things like .pyo and .pyc files to the original .py. If <em>filename</em>
+doesn&#8217;t have a .py extension, it will be returned as-is.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> &#8211; the path to a file.</li>
+<li><strong>split</strong> &#8211; a function to split extensions from basenames, usually <a class="reference external" href="http://docs.python.org/library/os.path.html#os.path.splitext" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">os.path.splitext()</span></tt></a>.</li>
+<li><strong>exists</strong> &#8211; a function to determine whether a file exists, usually <a class="reference external" href="http://docs.python.org/library/os.path.html#os.path.exists" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">os.path.exists()</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="script.main">
-<tt class="descclassname">script.</tt><tt class="descname">main</tt><big>(</big><em>argv</em><big>)</big><a class="reference internal" href="_modules/script.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.main" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">script.</tt><tt class="descname">main</tt><big>(</big><em>argv</em>, <em>out=None</em>, <em>err=None</em><big>)</big><a class="reference internal" href="_modules/script.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main entry point.</p>
 <p>Returns a value that can be understood by <a class="reference external" href="http://docs.python.org/library/sys.html#sys.exit" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -120,6 +153,8 @@ directory and reaps any leftover subprocesses.</p>
 <tbody valign="top">
 <tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>argv</strong> &#8211; a list of command line arguments, usually <a class="reference external" href="http://docs.python.org/library/sys.html#sys.argv" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">sys.argv</span></tt></a>.</li>
+<li><strong>out</strong> &#8211; stream to write messages; <a class="reference external" href="http://docs.python.org/library/sys.html#sys.stdout" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">sys.stdout</span></tt></a> if None.</li>
+<li><strong>err</strong> &#8211; stream to write error messages; <a class="reference external" href="http://docs.python.org/library/sys.html#sys.stderr" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">sys.stderr</span></tt></a> if None.</li>
 </ul>
 </td>
 </tr>
@@ -129,8 +164,8 @@ directory and reaps any leftover subprocesses.</p>
 
 <dl class="function">
 <dt id="script.parseargs">
-<tt class="descclassname">script.</tt><tt class="descname">parseargs</tt><big>(</big><em>args</em><big>)</big><a class="reference internal" href="_modules/script.html#parseargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.parseargs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse command line <em>args</em>.</p>
+<tt class="descclassname">script.</tt><tt class="descname">parseargs</tt><big>(</big><em>argv</em><big>)</big><a class="reference internal" href="_modules/script.html#parseargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#script.parseargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse command line arguments.</p>
 <p>Returns a tuple (<em>opts</em>, <em>args</em>), where <em>opts</em> is an
 <tt class="xref py py-class docutils literal"><span class="pre">optparse.Values</span></tt> instance and <em>args</em> is the list of arguments left
 over after processing.</p>
@@ -139,7 +174,7 @@ over after processing.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>args</strong> &#8211; a list of command line arguments, usually <a class="reference external" href="http://docs.python.org/library/sys.html#sys.argv" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">sys.argv</span></tt></a>.</li>
+<li><strong>argv</strong> &#8211; a list of command line arguments, usually <a class="reference external" href="http://docs.python.org/library/sys.html#sys.argv" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">sys.argv</span></tt></a>.</li>
 </ul>
 </td>
 </tr>
