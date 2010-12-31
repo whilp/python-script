@@ -95,9 +95,9 @@ def main(argv, out=None, err=None):
     :param out: stream to write messages; :data:`sys.stdout` if None.
     :param err: stream to write error messages; :data:`sys.stderr` if None.
     """
-    if out is None:
+    if out is None: # pragma: nocover
         out = sys.stdout
-    if err is None:
+    if err is None: # pragma: nocover
         err = sys.stderr
     (opts, args) = parseargs(argv)
     level = logging.WARNING - ((opts.verbose - opts.quiet) * 10)
