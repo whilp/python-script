@@ -215,6 +215,9 @@ class TestFunctional(unittest.TestCase):
         instance. By default, the path to the script itself will be used as the
         executable and *args* will be passed as arguments to it.
 
+        .. note::
+            The value of *executable* will be prepended to *args*.
+
         :param args: arguments to be passed to :class:`subprocess.Popen`.
         :param kwargs: keyword arguments to be passed to :class`subprocess.Popen`.
         :param communicate: if True, call :meth:`subprocess.Popen.communicate` after creating the subprocess.
@@ -230,6 +233,7 @@ class TestFunctional(unittest.TestCase):
         communicate = kwargs.pop("communicate", True)
         _kwargs.update(kwargs)
         kwargs = _kwargs
+        args = [kwargs["executable"]] + list(args)
         log.debug("Creating test process %r, %r", args, kwargs)
         process = subprocess.Popen(args, **kwargs)
 
