@@ -3,6 +3,11 @@ import unittest
 
 from StringIO import StringIO
 
+class FakeProcess(object):
+
+    def kill(self):
+        self.alive = False
+
 class TestArgParsing(unittest.TestCase):
 
     def setUp(self):
@@ -79,3 +84,28 @@ class TestTests(unittest.TestCase):
     def test_getpyfile_script(self):
         self.assertEqual(
             self.getpyfile("foo", exists=lambda x: True), "foo")
+
+class TestFunctionalTests(unittest.TestCase):
+
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+        import script
+
+        class TestFunctional(script.TestFunctional):
+
+            def __init__(self):
+                pass
+
+        self.functest = TestFunctional()
+        self.functest.setUp()
+
+        self.proc = p = FakeProcess()
+        p.pid = 10
+        p.alive = True
+
+    def test_reap(self):
+        self.functest.processes.append(self.proc)
+        self.functest.tearDown()
+
+        self.assertEqual(self.functest.processes, [])
+        self.assertEqual(self.proc.alive, False)

@@ -198,7 +198,8 @@ class TestFunctional(unittest.TestCase):
         shutil.rmtree(self.tmpdir)
         os.chdir(self.oldcwd)
 
-        for process in self.processes:
+        while self.processes:
+            process = self.processes.pop()
             log.debug("Reaping test process with PID %d", process.pid)
             try:
                 process.kill()
