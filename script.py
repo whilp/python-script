@@ -221,7 +221,7 @@ class TestFunctional(unittest.TestCase):
         :param executable: if present, the path to a program to execute instead of this script.
         """
         _kwargs = {
-            "executable": os.path.abspath(__file__),
+            "executable": os.path.abspath(getpyfile(__file__)),
             "stdin": subprocess.PIPE,
             "stdout": subprocess.PIPE,
             "stderr": subprocess.PIPE,
