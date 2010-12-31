@@ -112,7 +112,7 @@ def main(argv, out=None, err=None):
 
     log.debug("Ready to run")
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: nocover
     sys.exit(main(sys.argv))
 
 # Script unit and functional tests. These tests are defined after the '__name__
