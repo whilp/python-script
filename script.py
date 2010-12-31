@@ -138,6 +138,15 @@ import subprocess
 import tempfile
 import unittest
 
+def getsourcefile(filename, split=os.path.splitext, exists=os.path.exists):
+    sourcefile = filename
+    base, ext = split(filename)
+    if ext[:3] == ".py":
+        sourcefile = base + ".py"
+    if not exists(sourcefile):
+        sourcefile = filename
+    return sourcefile
+
 class TestMain(unittest.TestCase):
 
     def test_aunittest(self):

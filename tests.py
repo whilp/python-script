@@ -60,3 +60,22 @@ class TestMain(unittest.TestCase):
         self.assertEqual(self.buffer, [])
         self.assertEqual(len(self.out.getvalue()), 0)
         self.assertEqual(len(self.err.getvalue()), 0)
+
+class TestTests(unittest.TestCase):
+
+    def setUp(self):
+        from script import getsourcefile
+
+        self.getsourcefile = getsourcefile
+
+    def test_getsourcefile(self):
+        self.assertEqual(
+            self.getsourcefile("foo.pyc", exists=lambda x: True), "foo.py")
+
+    def test_getsourcefile_nonexistent(self):
+        self.assertEqual(
+            self.getsourcefile("foo.py", exists=lambda x: False), "foo.py")
+
+    def test_getsourcefile_script(self):
+        self.assertEqual(
+            self.getsourcefile("foo", exists=lambda x: True), "foo")
