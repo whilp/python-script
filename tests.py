@@ -51,3 +51,4 @@ class TestMain(unittest.TestCase):
         self.assertEqual(result, None)
         self.assertEqual(len(self.buffer), 1)
         self.assertEqual(self.buffer[0].msg, "Ready to run")
+        self.assertTrue("Ready to run" in self.err.getvalue())
