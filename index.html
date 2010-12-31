@@ -46,16 +46,20 @@
   <div class="section" id="a-python-script">
 <h1>A Python script<a class="headerlink" href="#a-python-script" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-script"></span><p><a class="reference external" href="https://github.com/wcmaier/python-script/blob/master/script.py">This</a> is what an ideal Python script might look like.</p>
-<p>It&#8217;s written to have several important properties; namely:</p>
+<p>The script can be used as a template for real scripts that will have several
+important properties; namely, they will be:</p>
 <blockquote>
 <ul class="simple">
-<li>readability: follows <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a>.</li>
-<li>portability: uses portable components where necessary.</li>
-<li>testability: unit and functional tests that can be run without causing side
-effects (and these tests are tested).</li>
-<li>configurability: command line configuration of logging and other details.</li>
+<li>readable (<span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a>);</li>
+<li>portable (by using things like <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.Popen" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">subprocess.Popen</span></tt></a> and <a class="reference external" href="http://docs.python.org/library/os.html#module-os" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a>);</li>
+<li>testable (thanks to a simple unit and functional testing framework that is
+itself tested); and</li>
+<li>configurable (users can change logging verbosity and other runtime details
+on the command line).</li>
 </ul>
 </blockquote>
+<p>All of this is accomplished using only modules from the Python standard library
+that are available in every installation.</p>
 <p><a class="reference external" href="http://git-scm.com/">Git</a> and <a class="reference external" href="http://mercurial.selenic.com/">Mercurial</a> repositories for this script can be found at <a class="reference external" href="http://github.com/wcmaier/python-script">Github</a> and
 <a class="reference external" href="http://bitbucket.org/wcmaier/python-script">Bitbucket</a>, respectively:</p>
 <div class="highlight-none"><div class="highlight"><pre>$ git clone git://github.com/wcmaier/python-script.git
@@ -123,7 +127,7 @@ directory and reaps any leftover subprocesses.</p>
 
 <dl class="function">
 <dt id="script.getpyfile">
-<tt class="descclassname">script.</tt><tt class="descname">getpyfile</tt><big>(</big><em>filename</em>, <em>split=&lt;function splitext at 0x7d41802c&gt;</em>, <em>exists=&lt;function exists at 0x7d412454&gt;</em><big>)</big><a class="headerlink" href="#script.getpyfile" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">script.</tt><tt class="descname">getpyfile</tt><big>(</big><em>filename</em>, <em>split=&lt;function splitext at 0x84d4702c&gt;</em>, <em>exists=&lt;function exists at 0x84d41454&gt;</em><big>)</big><a class="headerlink" href="#script.getpyfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the .py file for a filename.</p>
 <p>Resolves things like .pyo and .pyc files to the original .py. If <em>filename</em>
 doesn&#8217;t have a .py extension, it will be returned as-is.</p>
