@@ -222,3 +222,10 @@ class TestFunctional(unittest.TestCase):
             self.processes.append(process)
 
         return process, stdout, stderr
+
+    def test_functionaltest(self):
+        """This is a dummy functional test."""
+        proc, stdout, stderr = self.sub("-h")
+
+        self.assertEqual(proc.returncode, 0)
+        self.assertEqual("script.py" in stderr)
