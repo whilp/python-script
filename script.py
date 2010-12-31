@@ -187,13 +187,16 @@ class TestFunctional(unittest.TestCase):
         Returns a tuple (*process*, *stdout*, *stderr*). If the *communicate*
         keyword argument is True, *stdout* and *stderr* will be strings.
         Otherwise, they will be None. *process* is a :class:`subprocess.Popen`
-        instance.
+        instance. By default, the path to the script itself will be used as the
+        executable and *args* will be passed as arguments to it.
 
         :param args: arguments to be passed to :class:`subprocess.Popen`.
         :param kwargs: keyword arguments to be passed to :class`subprocess.Popen`.
         :param communicate: if True, call :meth:`subprocess.Popen.communicate` after creating the subprocess.
+        :param executable: if present, the path to a program to execute instead of this script.
         """
         _kwargs = {
+            "executable": os.path.abspath(__file__),
             "stdin": subprocess.PIPE,
             "stdout": subprocess.PIPE,
             "stderr": subprocess.PIPE,
