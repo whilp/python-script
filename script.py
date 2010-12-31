@@ -86,23 +86,31 @@ def parseargs(argv):
     (opts, args) = parser.parse_args(args=argv[1:])
     return (opts, args)
 
-def main(argv):
+def main(argv, out=None, err=None):
     """Main entry point.
 
     Returns a value that can be understood by :func:`sys.exit`.
 
     :param argv: a list of command line arguments, usually :data:`sys.argv`.
+    :param out: stream to write messages; :data:`sys.stdout` if None.
+    :param err: stream to write error messages; :data:`sys.stderr` if None.
     """
+    if out is None:
+        out = sys.stdout
+    if err is None:
+        err = sys.stderr
     (opts, args) = parseargs(argv)
     level = logging.WARNING - ((opts.verbose - opts.quiet) * 10)
     if opts.silent:
         level = logging.CRITICAL + 1
 
     format = "%(message)s"
-    handler = logging.StreamHandler(sys.stderr)
+    handler = logging.StreamHandler(err)
     handler.setFormatter(logging.Formatter(format))
     log.addHandler(handler)
     log.setLevel(level)
+
+    log.debug("Ready to run")
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
