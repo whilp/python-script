@@ -53,16 +53,17 @@ except AttributeError:
 log = logging.getLogger(__name__)
 log.addHandler(NullHandler())
 
-def parseargs(args):
-    """Parse command line *args*.
+def parseargs(argv):
+    """Parse command line arguments.
 
     Returns a tuple (*opts*, *args*), where *opts* is an
     :class:`optparse.Values` instance and *args* is the list of arguments left
     over after processing.
 
-    :param args: a list of command line arguments, usually :data:`sys.argv`.
+    :param argv: a list of command line arguments, usually :data:`sys.argv`.
     """
-    parser = optparse.OptionParser()
+    prog = argv[0]
+    parser = optparse.OptionParser(prog=prog)
     parser.allow_interspersed_args = False
 
     defaults = {
@@ -82,7 +83,7 @@ def parseargs(args):
         default=defaults["verbose"], action="count",
         help="increase the logging verbosity")
 
-    (opts, args) = parser.parse_args(args=args)
+    (opts, args) = parser.parse_args(args=argv[1:])
     return (opts, args)
 
 def main(argv):
