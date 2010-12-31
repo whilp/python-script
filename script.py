@@ -163,7 +163,7 @@ class TestFunctional(unittest.TestCase):
             "PATH": os.environ["PATH"],
             "LANG": "C",
         }
-        self.tmpdir = tempfile.mkdtemp(prefix="-test-" % __name__)
+        self.tmpdir = tempfile.mkdtemp(prefix=__name__ + "-test-")
         self.oldcwd = os.getcwd()
 
         log.debug("Initializing test directory %r", self.tmpdir)
