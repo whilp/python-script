@@ -52,3 +52,11 @@ class TestMain(unittest.TestCase):
         self.assertEqual(len(self.buffer), 1)
         self.assertEqual(self.buffer[0].msg, "Ready to run")
         self.assertTrue("Ready to run" in self.err.getvalue())
+    
+    def test_main_silent(self):
+        result = self.main(["foo", "-s", "-vv"])
+
+        self.assertEqual(result, None)
+        self.assertEqual(self.buffer, [])
+        self.assertEqual(len(self.out.getvalue()), 0)
+        self.assertEqual(len(self.err.getvalue()), 0)
