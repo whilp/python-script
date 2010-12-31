@@ -130,7 +130,12 @@ import tempfile
 import unittest
 
 class TestMain(unittest.TestCase):
-    pass
+
+    def test_aunittest(self):
+        self.assertEqual(1 + 1, 2)
+
+    def test_afailingunittest(self):
+        self.assertEqual(1 + 1, 3)
 
 class TestFunctional(unittest.TestCase):
     """Functional tests.
