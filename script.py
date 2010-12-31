@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-"""This is what an ideal Python script might look like.
+"""`This`_ is what an ideal Python script might look like.
+
+.. _This:   https://github.com/wcmaier/python-script/blob/master/script.py
 
 It's written to have several important properties; namely:
 
   * readability: follows :PEP:`8`.
   * portability: uses portable components where necessary.
   * testability: unit and functional tests that can be run without causing side
-    effects.
+    effects (and these tests are tested).
   * configurability: command line configuration of logging and other details.
 
 `Git`_ and `Mercurial`_ repositories for this script can be found at `Github`_ and
