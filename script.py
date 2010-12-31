@@ -141,10 +141,8 @@ import unittest
 class TestMain(unittest.TestCase):
 
     def test_aunittest(self):
+        """This is a dummy unit test."""
         self.assertEqual(1 + 1, 2)
-
-    def test_afailingunittest(self):
-        self.assertEqual(1 + 1, 3)
 
 class TestFunctional(unittest.TestCase):
     """Functional tests.
