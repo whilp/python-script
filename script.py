@@ -3,13 +3,18 @@
 
 .. _This:   https://github.com/wcmaier/python-script/blob/master/script.py
 
-It's written to have several important properties; namely:
+The script can be used as a template for real scripts that will have several
+important properties; namely, they will be:
 
-  * readability: follows :PEP:`8`.
-  * portability: uses portable components where necessary.
-  * testability: unit and functional tests that can be run without causing side
-    effects (and these tests are tested).
-  * configurability: command line configuration of logging and other details.
+  * readable (:PEP:`8`);
+  * portable (by using things like :class:`subprocess.Popen` and :mod:`os`);
+  * testable (thanks to a simple unit and functional testing framework that is
+    itself tested); and
+  * configurable (users can change logging verbosity and other runtime details
+    on the command line).
+
+All of this is accomplished using only modules from the Python standard library
+that are available in every installation.
 
 `Git`_ and `Mercurial`_ repositories for this script can be found at `Github`_ and
 `Bitbucket`_, respectively::
