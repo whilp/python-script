@@ -109,3 +109,24 @@ class TestFunctionalTests(unittest.TestCase):
 
         self.assertEqual(self.functest.processes, [])
         self.assertEqual(self.proc.alive, False)
+
+    def test_reap_procalreadydead(self):
+        def kill():
+            err = OSError()
+            err.errno = 3
+            raise err
+        self.proc.kill = kill
+        self.functest.processes.append(self.proc)
+        self.functest.tearDown()
+
+        self.assertEqual(self.functest.processes, [])
+
+    def test_reap_oserror(self):
+        def kill():
+            err = OSError()
+            err.errno = 10 
+            raise err
+        self.proc.kill = kill
+        self.functest.processes.append(self.proc)
+
+        self.assertRaises(OSError, self.functest.tearDown)
