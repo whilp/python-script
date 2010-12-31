@@ -64,18 +64,18 @@ class TestMain(unittest.TestCase):
 class TestTests(unittest.TestCase):
 
     def setUp(self):
-        from script import getsourcefile
+        from script import getpyfile
 
-        self.getsourcefile = getsourcefile
+        self.getpyfile = getpyfile
 
-    def test_getsourcefile(self):
+    def test_getpyfile(self):
         self.assertEqual(
-            self.getsourcefile("foo.pyc", exists=lambda x: True), "foo.py")
+            self.getpyfile("foo.pyc", exists=lambda x: True), "foo.py")
 
-    def test_getsourcefile_nonexistent(self):
+    def test_getpyfile_nonexistent(self):
         self.assertEqual(
-            self.getsourcefile("foo.py", exists=lambda x: False), "foo.py")
+            self.getpyfile("foo.py", exists=lambda x: False), "foo.py")
 
-    def test_getsourcefile_script(self):
+    def test_getpyfile_script(self):
         self.assertEqual(
-            self.getsourcefile("foo", exists=lambda x: True), "foo")
+            self.getpyfile("foo", exists=lambda x: True), "foo")

@@ -138,7 +138,16 @@ import subprocess
 import tempfile
 import unittest
 
-def getsourcefile(filename, split=os.path.splitext, exists=os.path.exists):
+def getpyfile(filename, split=os.path.splitext, exists=os.path.exists):
+    """Return the .py file for a filename.
+
+    Resolves things like .pyo and .pyc files to the original .py. If *filename*
+    doesn't have a .py extension, it will be returned as-is.
+
+    :param filename: the path to a file.
+    :param split: a function to split extensions from basenames, usually :func:`os.path.splitext`.
+    :param exists: a function to determine whether a file exists, usually :func:`os.path.exists`.
+    """
     sourcefile = filename
     base, ext = split(filename)
     if ext[:3] == ".py":
