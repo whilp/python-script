@@ -222,7 +222,7 @@ class TestFunctional(unittest.TestCase):
             The value of *executable* will be prepended to *args*.
 
         :param args: arguments to be passed to :class:`subprocess.Popen`.
-        :param kwargs: keyword arguments to be passed to :class`subprocess.Popen`.
+        :param kwargs: keyword arguments to be passed to :class:`subprocess.Popen`.
         :param communicate: if True, call :meth:`subprocess.Popen.communicate` after creating the subprocess.
         :param executable: if present, the path to a program to execute instead of this script.
         """
