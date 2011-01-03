@@ -259,4 +259,4 @@ class TestFunctional(unittest.TestCase):
         proc, stdout, stderr = self.sub("-h")
 
         self.assertEqual(proc.returncode, 0)
-        self.assertTrue("script.py" in stdout)
+        self.assertTrue(name in stdout)
