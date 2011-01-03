@@ -137,7 +137,8 @@ if __name__ == "__main__": # pragma: nocover
 #   $ nosetests --with-scriptloader path/to/script
 
 # Override the global logger instance with one from a special "tests" namespace.
-log = logging.getLogger("%s.tests" % __name__)
+name = log.name
+log = logging.getLogger("%s.tests" % name)
 
 import os
 import shutil
@@ -188,7 +189,7 @@ class TestFunctional(unittest.TestCase):
             "PATH": os.environ["PATH"],
             "LANG": "C",
         }
-        self.tmpdir = tempfile.mkdtemp(prefix=__name__ + "-test-")
+        self.tmpdir = tempfile.mkdtemp(prefix=name + "-test-")
         self.oldcwd = os.getcwd()
 
         log.debug("Initializing test directory %r", self.tmpdir)
