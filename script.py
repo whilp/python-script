@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """`This`_ is what an ideal Python script might look like.
 
 .. _This:   https://github.com/wcmaier/python-script/blob/master/script.py
