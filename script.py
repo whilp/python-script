@@ -17,9 +17,9 @@ important properties; namely, they will be:
 All of this is accomplished using only modules from the Python standard library
 that are available in every installation.
 
-`Git`_ and `Mercurial`_ repositories for this script can be found at `Github`_ and
-`Bitbucket`_, respectively::
-    
+`Git`_ and `Mercurial`_ repositories for this script can be found at `Github`_
+and `Bitbucket`_, respectively::
+
     $ git clone git://github.com/wcmaier/python-script.git
     $ hg clone http://bitbucket.org/wcmaier/python-script
 
@@ -53,13 +53,15 @@ try:
     NullHandler = logging.NullHandler
 except AttributeError:
     class NullHandler(logging.Handler):
-        def emit(self, record): pass
+        def emit(self, record):
+            pass
 
 # Add a do-nothing NullHandler to the module logger to prevent "No handlers
 # could be found" errors. The calling code can still add other, more useful
 # handlers, or otherwise configure logging.
 log = logging.getLogger(__name__)
 log.addHandler(NullHandler())
+
 
 def parseargs(argv):
     """Parse command line arguments.
@@ -82,17 +84,18 @@ def parseargs(argv):
 
     # Global options.
     parser.add_option("-q", "--quiet", dest="quiet",
-        default=defaults["quiet"], action="count",
-        help="decrease the logging verbosity")
+                      default=defaults["quiet"], action="count",
+                      help="decrease the logging verbosity")
     parser.add_option("-s", "--silent", dest="silent",
-        default=defaults["silent"], action="store_true",
-        help="silence the logger")
+                      default=defaults["silent"], action="store_true",
+                      help="silence the logger")
     parser.add_option("-v", "--verbose", dest="verbose",
-        default=defaults["verbose"], action="count",
-        help="increase the logging verbosity")
+                      default=defaults["verbose"], action="count",
+                      help="increase the logging verbosity")
 
     (opts, args) = parser.parse_args(args=argv[1:])
     return (opts, args)
+
 
 def main(argv, out=None, err=None):
     """Main entry point.
@@ -103,9 +106,9 @@ def main(argv, out=None, err=None):
     :param out: stream to write messages; :data:`sys.stdout` if None.
     :param err: stream to write error messages; :data:`sys.stderr` if None.
     """
-    if out is None: # pragma: nocover
+    if out is None:  # pragma: nocover
         out = sys.stdout
-    if err is None: # pragma: nocover
+    if err is None:  # pragma: nocover
         err = sys.stderr
     (opts, args) = parseargs(argv)
     level = logging.WARNING - ((opts.verbose - opts.quiet) * 10)
@@ -120,14 +123,14 @@ def main(argv, out=None, err=None):
 
     log.debug("Ready to run")
 
-if __name__ == "__main__": # pragma: nocover
+if __name__ == "__main__":  # pragma: nocover
     sys.exit(main(sys.argv))
 
 # Script unit and functional tests. These tests are defined after the '__name__
 # == "__main__"' idiom so that they aren't loaded when the script is executed.
 # If the script (or a symlink to the script) has the usual .py filename
 # extension, these tests may be run as follows:
-# 
+#
 #   $ python -m unittest path/to/script.py (Python 3.X/unittest2)
 #   $ nosetests path/to/script.py
 #
@@ -137,7 +140,8 @@ if __name__ == "__main__": # pragma: nocover
 #   $ pip install scriptloader
 #   $ nosetests --with-scriptloader path/to/script
 
-# Override the global logger instance with one from a special "tests" namespace.
+# Override the global logger instance with one from a special "tests"
+# namespace.
 name = log.name
 log = logging.getLogger("%s.tests" % name)
 
@@ -147,6 +151,7 @@ import subprocess
 import tempfile
 import unittest
 
+
 def getpyfile(filename, split=os.path.splitext, exists=os.path.exists):
     """Return the .py file for a filename.
 
@@ -154,8 +159,10 @@ def getpyfile(filename, split=os.path.splitext, exists=os.path.exists):
     doesn't have a .py extension, it will be returned as-is.
 
     :param filename: the path to a file.
-    :param split: a function to split extensions from basenames, usually :func:`os.path.splitext`.
-    :param exists: a function to determine whether a file exists, usually :func:`os.path.exists`.
+    :param split: a function to split extensions from basenames,
+        usually :func:`os.path.splitext`.
+    :param exists: a function to determine whether a file exists,
+        usually :func:`os.path.exists`.
     """
     sourcefile = filename
     base, ext = split(filename)
@@ -165,11 +172,13 @@ def getpyfile(filename, split=os.path.splitext, exists=os.path.exists):
         sourcefile = filename
     return sourcefile
 
+
 class TestMain(unittest.TestCase):
 
     def test_aunittest(self):
         """This is a dummy unit test."""
         self.assertEqual(1 + 1, 2)
+
 
 class TestFunctional(unittest.TestCase):
     """Functional tests.
@@ -229,9 +238,12 @@ class TestFunctional(unittest.TestCase):
             The value of *executable* will be prepended to *args*.
 
         :param args: arguments to be passed to :class:`subprocess.Popen`.
-        :param kwargs: keyword arguments to be passed to :class:`subprocess.Popen`.
-        :param communicate: if True, call :meth:`subprocess.Popen.communicate` after creating the subprocess.
-        :param executable: if present, the path to a program to execute instead of this script.
+        :param kwargs: keyword arguments to be passed
+            to :class:`subprocess.Popen`.
+        :param communicate: if True, call :meth:`subprocess.Popen.communicate`
+            after creating the subprocess.
+        :param executable: if present, the path to a program to execute instead
+            of this script.
         """
         _kwargs = {
             "executable": os.path.abspath(getpyfile(__file__)),
